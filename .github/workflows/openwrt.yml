@@ -1,0 +1,23 @@
+name: Amlogic
+
+on:
+  schedule:
+  - cron: "0 0 * * 5"
+
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-18.04
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Environment
+        run: ./openwrt_env.sh
+
+      - name: Update
+        run: ./openwrt_update.sh
+
+      - name: Build
+        run: ./openwrt_update.sh
