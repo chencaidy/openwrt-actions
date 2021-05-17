@@ -20,5 +20,5 @@ jobs:
       - name: Update
         run: ./openwrt_update.sh
 
-      - name: Build
-        run: ./openwrt_update.sh
+      - name: Build-X96Air
+        run: ./openwrt_build.sh x96-air_defconfig
