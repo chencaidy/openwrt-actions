@@ -12,10 +12,11 @@ rm -f .config
 rm -f .config.old
 
 # Import device defconfig
-echo "Build target: $1"
+echo -e "\033[32;1m==> Build target: $1 \033[0m"
 cat $CONFIG_FOLDER/$1 >> .config
 make defconfig
 
 # Build
-make -j V=s
+THREAD_NUM=$(cat /proc/cpuinfo | grep "processor"| wc -l)
+make -j $THREAD_NUM
 
