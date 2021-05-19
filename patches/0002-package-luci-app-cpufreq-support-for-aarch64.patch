@@ -1,0 +1,13 @@
+diff --git a/package/lean/luci-app-cpufreq/Makefile b/package/lean/luci-app-cpufreq/Makefile
+index b2851b27b..f16c75f97 100644
+--- a/package/lean/luci-app-cpufreq/Makefile
++++ b/package/lean/luci-app-cpufreq/Makefile
+@@ -7,7 +7,7 @@
+ include $(TOPDIR)/rules.mk
+ 
+ LUCI_TITLE:=LuCI for CPU Freq Setting
+-LUCI_DEPENDS:=@arm
++LUCI_DEPENDS:=@(arm||aarch64)
+ PKG_NAME:=luci-app-cpufreq
+ PKG_VERSION:=1
+ PKG_RELEASE:=5
