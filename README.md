@@ -5,12 +5,12 @@
 ## Description
 
 * `config` Device specific config
-* `patcher` A simple OpenWrt patch script and patchset
+* `patches` A simple OpenWrt patchset
 * `openwrt_env.sh` Configure local environment
-* `openwrt_update.sh` Update or clone source code
+* `openwrt_update.sh` Update source code and patch
 * `openwrt_build.sh` Build wizard
 
-## Manualy build
+## Manually build
 
 1. Cleanly install Ubuntu 18.04
 2. Clone actions repo and enter workspace
