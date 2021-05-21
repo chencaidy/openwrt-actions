@@ -67,6 +67,15 @@ else
 	git clone https://github.com/jerrykuku/luci-theme-argon.git -b 18.06
 fi
 
+# Update U-Boot
+echo -e "\033[32;1m==> Update U-Boot \033[0m"
+if [ -d "$OPENWRT_WS/package/boot/uboot-amlogic/.git" ]; then
+	git_update $OPENWRT_WS/package/boot/uboot-amlogic
+else
+	cd $OPENWRT_WS/package/boot
+	git clone https://github.com/chencaidy/openwrt-package-uboot-amlogic uboot-amlogic
+fi
+
 # Patcher
 echo -e "\033[32;1m==> Applying patch \033[0m"
 PATCH_FOLDER=$ROOT_FOLDER/patches
