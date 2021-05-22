@@ -1,5 +1,7 @@
 # OpenWrt autobuild for Amlogic
 
+## Status
+
 ![amlogic workflow](https://github.com/chencaidy/openwrt-actions/actions/workflows/amlogic.yml/badge.svg)
 
 ## Description
@@ -18,3 +20,9 @@
 4. Update source code: `./openwrt_update.sh`
 5. Build: `./openwrt_build.sh`
 6. Choose a target device in whiptail dialog
+
+## Credit
+
+* [OpenWrt Project](https://github.com/openwrt/openwrt)
+* [Lean's OpenWrt source](https://github.com/coolsnowwolf/lede)
+* [Jerrykuku 老竭力](https://github.com/jerrykuku)
