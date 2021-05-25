@@ -1,25 +1,33 @@
 #!/bin/bash
 
-ROOT_FOLDER=$(dirname $(readlink -f "$0"))
-OPENWRT_WS=$ROOT_FOLDER/openwrt
+ROOT_DIR=$(dirname $(readlink -f "$0"))
+OPENWRT_WS=$ROOT_DIR/openwrt
+UBOOT_DIR=$OPENWRT_WS/package/boot
+PACKAGE_DIR=$OPENWRT_WS/package/openwrt-packages
+TARGET_DIR=$OPENWRT_WS/target/linux
 
 function git_update
 {
-	cd $1
-	echo "Updating $1"
-	git reset --hard
-	git clean -df
-	git pull
+	local path=$1
+	local name=$2
+	local branch=$3
+	local url=$4
+
+	if [ -d "$path/$name/.git" ]; then
+		echo "Updating $path/$name"
+		cd $path/$name
+		git reset --hard
+		git clean -df
+		git pull
+	else
+		cd $path
+		git clone -b $branch $url $name
+	fi
 }
 
 # Update LEDE
 echo -e "\033[32;1m==> Update LEDE \033[0m"
-if [ -d "$OPENWRT_WS/.git" ]; then
-	git_update $OPENWRT_WS
-else
-	cd $ROOT_FOLDER
-	git clone https://github.com/coolsnowwolf/lede.git openwrt
-fi
+git_update $ROOT_DIR openwrt master https://github.com/coolsnowwolf/lede.git
 
 # Update packages
 echo -e "\033[32;1m==> Update packages \033[0m"
@@ -29,57 +37,26 @@ cd $OPENWRT_WS
 
 # Update target
 echo -e "\033[32;1m==> Update target \033[0m"
-if [ -d "$OPENWRT_WS/target/linux/amlogic/.git" ]; then
-	git_update $OPENWRT_WS/target/linux/amlogic
-else
-	cd $OPENWRT_WS/target/linux
-	git clone https://github.com/chencaidy/openwrt-target-amlogic.git amlogic
-fi
+git_update $TARGET_DIR amlogic master https://github.com/chencaidy/openwrt-target-amlogic.git
 
 # Update thirdparty
 echo -e "\033[32;1m==> Update thirdparty \033[0m"
-PACKAGE_FOLDER=$OPENWRT_WS/package/openwrt-packages
-mkdir -p $PACKAGE_FOLDER
+mkdir -p $PACKAGE_DIR
 ## From fw876
-if [ -d "$PACKAGE_FOLDER/helloworld/.git" ]; then
-	git_update $PACKAGE_FOLDER/helloworld
-else
-	cd $PACKAGE_FOLDER
-	git clone https://github.com/fw876/helloworld.git
-fi
+git_update $PACKAGE_DIR helloworld master https://github.com/fw876/helloworld.git
 ## From jerrykuku
-if [ -d "$PACKAGE_FOLDER/lua-maxminddb/.git" ]; then
-	git_update $PACKAGE_FOLDER/lua-maxminddb
-else
-	cd $PACKAGE_FOLDER
-	git clone https://github.com/jerrykuku/lua-maxminddb.git
-fi
-if [ -d "$PACKAGE_FOLDER/luci-app-vssr/.git" ]; then
-	git_update $PACKAGE_FOLDER/luci-app-vssr
-else
-	cd $PACKAGE_FOLDER
-	git clone https://github.com/jerrykuku/luci-app-vssr.git
-fi
-if [ -d "$PACKAGE_FOLDER/luci-theme-argon/.git" ]; then
-	git_update $PACKAGE_FOLDER/luci-theme-argon
-else
-	cd $PACKAGE_FOLDER
-	git clone https://github.com/jerrykuku/luci-theme-argon.git -b 18.06
-fi
+git_update $PACKAGE_DIR lua-maxminddb master https://github.com/jerrykuku/lua-maxminddb.git
+git_update $PACKAGE_DIR luci-app-vssr master https://github.com/jerrykuku/luci-app-vssr.git
+git_update $PACKAGE_DIR luci-theme-argon 18.06 https://github.com/jerrykuku/luci-theme-argon.git
 
 # Update U-Boot
 echo -e "\033[32;1m==> Update U-Boot \033[0m"
-if [ -d "$OPENWRT_WS/package/boot/uboot-amlogic/.git" ]; then
-	git_update $OPENWRT_WS/package/boot/uboot-amlogic
-else
-	cd $OPENWRT_WS/package/boot
-	git clone https://github.com/chencaidy/openwrt-package-uboot-amlogic uboot-amlogic
-fi
+git_update $UBOOT_DIR uboot-amlogic main https://github.com/chencaidy/openwrt-package-uboot-amlogic.git
 
 # Patcher
 echo -e "\033[32;1m==> Applying patch \033[0m"
-PATCH_FOLDER=$ROOT_FOLDER/patches
-for name in $(find $PATCH_FOLDER -name "*.patch")
+PATCH_DIR=$ROOT_DIR/patches
+for name in $(find $PATCH_DIR -name "*.patch")
 do
 	patch -N -r- -p1 -d $OPENWRT_WS < $name
 done
