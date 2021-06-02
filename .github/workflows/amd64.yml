@@ -1,0 +1,51 @@
+name: OpenWrt-AMD64
+
+on:
+  schedule:
+  - cron: "0 0 * * 5"
+
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-18.04
+
+    steps:
+      - uses: actions/checkout@v2
+
+#       - name: Cleanup
+#         run: |
+#           docker rmi `docker images -q`
+#           sudo rm -rf /usr/local/lib/android
+#           sudo rm -rf /usr/share/dotnet
+#           echo -e "\033[32;1m==> Free space: \033[0m"
+#           df -h
+
+#       - name: Environment
+#         run: ./openwrt_env.sh
+
+#       - name: Update
+#         run: ./openwrt_update.sh
+
+#       - name: Build
+#         run: ./openwrt_build.sh amd64-generic_defconfig
+
+#         - name: Package
+#           run: |
+#             echo "/tmp/OpenWrt_$(date +%Y%m%d).tar.xz" > /tmp/package_name
+#             cd ./openwrt/bin/targets/x86/64
+#             tar -Jcvf $(cat /tmp/package_name) openwrt-x86-64-generic-squashfs-combined-efi.img openwrt-x86-64-generic-squashfs-combined-efi.vmdk sha256sums version.buildinfo
+
+        - name: Package
+          run: |
+            echo "/tmp/OpenWrt_$(date +%Y%m%d).tar.xz" > /tmp/package_name
+            tar -Jcvf $(cat /tmp/package_name) /tmp/package_name
+
+        - name: Upload
+          uses: Difegue/action-megacmd@master
+          with:
+            args: put $(cat /tmp/package_name) /OpenWrt/AMD64
+          env:
+            USERNAME: ${{ secrets.MEGA_USERNAME }}
+            PASSWORD: ${{ secrets.MEGA_PASSWORD }}
