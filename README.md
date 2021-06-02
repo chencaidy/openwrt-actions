@@ -26,3 +26,4 @@
 * [OpenWrt Project](https://github.com/openwrt/openwrt)
 * [Lean's OpenWrt source](https://github.com/coolsnowwolf/lede)
 * [Jerrykuku 老竭力](https://github.com/jerrykuku)
+* [Vernesong](https://github.com/vernesong)
