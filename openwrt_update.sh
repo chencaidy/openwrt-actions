@@ -48,6 +48,8 @@ git_update $PACKAGE_DIR helloworld master https://github.com/fw876/helloworld.gi
 git_update $PACKAGE_DIR lua-maxminddb master https://github.com/jerrykuku/lua-maxminddb.git
 git_update $PACKAGE_DIR luci-app-vssr master https://github.com/jerrykuku/luci-app-vssr.git
 git_update $PACKAGE_DIR luci-theme-argon 18.06 https://github.com/jerrykuku/luci-theme-argon.git
+## From vernesong
+git_update $PACKAGE_DIR luci-app-openclash master https://github.com/vernesong/OpenClash.git
 
 # Update U-Boot
 echo -e "\033[32;1m==> Update U-Boot \033[0m"
