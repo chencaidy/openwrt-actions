@@ -2,7 +2,12 @@
 
 ## Status
 
-![amlogic workflow](https://github.com/chencaidy/openwrt-actions/actions/workflows/amlogic.yml/badge.svg)
+[![Build Status](https://github.com/chencaidy/openwrt-actions/actions/workflows/amd64.yml/badge.svg)](https://github.com/chencaidy/openwrt-actions/actions/workflows/amd64.yml)
+[![Build Status](https://github.com/chencaidy/openwrt-actions/actions/workflows/amlogic.yml/badge.svg)](https://github.com/chencaidy/openwrt-actions/actions/workflows/amlogic.yml)
+
+## Downloads
+
+[![Download Link](https://img.shields.io/badge/Download-MEGA-blue)](https://mega.nz/folder/yFc3RY5Q#Qtbwdfx7PW0vNC-FuuLlnQ)
 
 ## Description
 
