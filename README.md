@@ -2,8 +2,10 @@
 
 ## Status
 
-[![Build Status](https://github.com/chencaidy/openwrt-actions/actions/workflows/amd64.yml/badge.svg)](https://github.com/chencaidy/openwrt-actions/actions/workflows/amd64.yml)
-[![Build Status](https://github.com/chencaidy/openwrt-actions/actions/workflows/amlogic.yml/badge.svg)](https://github.com/chencaidy/openwrt-actions/actions/workflows/amlogic.yml)
+| Platform | Devices | Release date | Build status |
+|:---------|:--------|:-------------|:-------------|
+AMD64 | Generic | Every week 5 (UTC+0) | [![Build Status](https://github.com/chencaidy/openwrt-actions/actions/workflows/amd64.yml/badge.svg)](https://github.com/chencaidy/openwrt-actions/actions/workflows/amd64.yml)
+Amlogic | X96-Air Phicomm-N1 | Every week 5 (UTC+0) | [![Build Status](https://github.com/chencaidy/openwrt-actions/actions/workflows/amlogic.yml/badge.svg)](https://github.com/chencaidy/openwrt-actions/actions/workflows/amlogic.yml)
 
 ## Downloads
 
