@@ -2,7 +2,7 @@ name: OpenWrt-Amlogic
 
 on:
   schedule:
-  - cron: "0 0 * * 5"
+    - cron: "0 0 * * 5"
 
   workflow_dispatch:
 
@@ -12,13 +12,14 @@ jobs:
     runs-on: ubuntu-18.04
 
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout
+        uses: actions/checkout@v2
 
       - name: Cleanup
         run: |
-          docker rmi `docker images -q`
           sudo rm -rf /usr/local/lib/android
           sudo rm -rf /usr/share/dotnet
+          sudo rm -rf /opt/ghc
           echo -e "\033[32;1m==> Free space: \033[0m"
           df -h
 
@@ -30,3 +31,16 @@ jobs:
 
       - name: Build-X96Air
         run: ./openwrt_build.sh x96-air_defconfig
+
+      - name: Package-X96Air
+        run: |
+          cd $GITHUB_WORKSPACE/openwrt/bin/targets/amlogic/cortexa55
+          tar -Jcvf openwrt-x96-air.tar.xz *-x96-air-squashfs-* sha256sums version.buildinfo
+
+      - name: Upload-X96Air
+        uses: Difegue/action-megacmd@master
+        with:
+          args: put $GITHUB_WORKSPACE/openwrt/bin/targets/amlogic/cortexa55/openwrt-x96-air.tar.xz /OpenWrt/Amlogic/openwrt-x96-air-$(date +%Y%m%d).tar.xz
+        env:
+          USERNAME: ${{ secrets.MEGA_USERNAME }}
+          PASSWORD: ${{ secrets.MEGA_PASSWORD }}

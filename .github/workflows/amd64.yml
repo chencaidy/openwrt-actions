@@ -2,7 +2,7 @@ name: OpenWrt-AMD64
 
 on:
   schedule:
-  - cron: "0 0 * * 5"
+    - cron: "0 0 * * 5"
 
   workflow_dispatch:
 
@@ -12,7 +12,8 @@ jobs:
     runs-on: ubuntu-18.04
 
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout
+        uses: actions/checkout@v2
 
       - name: Cleanup
         run: |
@@ -34,7 +35,7 @@ jobs:
       - name: Package
         run: |
           cd $GITHUB_WORKSPACE/openwrt/bin/targets/x86/64
-          tar -Jcvf openwrt.tar.xz openwrt-x86-64-generic-squashfs-combined-efi.img openwrt-x86-64-generic-squashfs-combined-efi.vmdk sha256sums version.buildinfo
+          tar -Jcvf openwrt.tar.xz *-squashfs-combined-efi.* sha256sums version.buildinfo
 
       - name: Upload
         uses: Difegue/action-megacmd@master
