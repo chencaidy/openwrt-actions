@@ -8,7 +8,7 @@ on:
 
 jobs:
   build:
-    name: Build
+    name: Build firmware
     runs-on: ubuntu-18.04
 
     steps:
@@ -20,8 +20,7 @@ jobs:
           sudo rm -rf /usr/local/lib/android
           sudo rm -rf /usr/share/dotnet
           sudo rm -rf /opt/ghc
-          echo -e "\033[32;1m==> Free space: \033[0m"
-          df -h
+          echo -e "\033[32;1m==> Free space: \033[0m" && df -h
 
       - name: Environment
         run: ./openwrt_env.sh
@@ -32,15 +31,16 @@ jobs:
       - name: Build
         run: ./openwrt_build.sh amd64-generic_defconfig
 
-      - name: Package
+      - name: Deliver
         run: |
+          echo -e "\033[32;1m==> Free space: \033[0m" && df -h
           cd $GITHUB_WORKSPACE/openwrt/bin/targets/x86/64
-          tar -Jcvf openwrt.tar.xz *-squashfs-combined-efi.* sha256sums version.buildinfo
+          mkdir release && cp *-combined-efi.* *.buildinfo sha256sums release
 
       - name: Upload
         uses: Difegue/action-megacmd@master
         with:
-          args: put $GITHUB_WORKSPACE/openwrt/bin/targets/x86/64/openwrt.tar.xz /OpenWrt/AMD64/openwrt-$(date +%Y%m%d).tar.xz
+          args: put $GITHUB_WORKSPACE/openwrt/bin/targets/x86/64/release /OpenWrt/AMD64/$(date +%Y%m%d)
         env:
           USERNAME: ${{ secrets.MEGA_USERNAME }}
           PASSWORD: ${{ secrets.MEGA_PASSWORD }}
