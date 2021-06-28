@@ -8,7 +8,7 @@ on:
 
 jobs:
   build:
-    name: Build
+    name: Build firmware
     runs-on: ubuntu-18.04
 
     steps:
@@ -20,8 +20,7 @@ jobs:
           sudo rm -rf /usr/local/lib/android
           sudo rm -rf /usr/share/dotnet
           sudo rm -rf /opt/ghc
-          echo -e "\033[32;1m==> Free space: \033[0m"
-          df -h
+          echo -e "\033[32;1m==> Free space: \033[0m" && df -h
 
       - name: Environment
         run: ./openwrt_env.sh
@@ -29,18 +28,19 @@ jobs:
       - name: Update
         run: ./openwrt_update.sh
 
-      - name: Build-X96Air
+      - name: Build X96Air
         run: ./openwrt_build.sh x96-air_defconfig
 
-      - name: Package-X96Air
+      - name: Deliver X96Air
         run: |
+          echo -e "\033[32;1m==> Free space: \033[0m" && df -h
           cd $GITHUB_WORKSPACE/openwrt/bin/targets/amlogic/cortexa55
-          tar -Jcvf openwrt-x96-air.tar.xz *-x96-air-squashfs-* sha256sums version.buildinfo
+          mkdir x96-air && cp *-x96-air-squashfs-* *.buildinfo sha256sums x96-air
 
-      - name: Upload-X96Air
+      - name: Upload X96Air
         uses: Difegue/action-megacmd@master
         with:
-          args: put $GITHUB_WORKSPACE/openwrt/bin/targets/amlogic/cortexa55/openwrt-x96-air.tar.xz /OpenWrt/Amlogic/openwrt-x96-air-$(date +%Y%m%d).tar.xz
+          args: put $GITHUB_WORKSPACE/openwrt/bin/targets/amlogic/cortexa55/x96-air /OpenWrt/Amlogic/x96-air/$(date +%Y%m%d)
         env:
           USERNAME: ${{ secrets.MEGA_USERNAME }}
           PASSWORD: ${{ secrets.MEGA_PASSWORD }}
