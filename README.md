@@ -2,14 +2,11 @@
 
 ## Status
 
-| Platform | Devices | Release date | Build status |
-|:---------|:--------|:-------------|:-------------|
-AMD64 | Generic | Every week 5 (UTC+0) | [![Build Status](https://github.com/chencaidy/openwrt-actions/actions/workflows/amd64.yml/badge.svg)](https://github.com/chencaidy/openwrt-actions/actions/workflows/amd64.yml)
-Amlogic | X96-Air Phicomm-N1 | Every week 5 (UTC+0) | [![Build Status](https://github.com/chencaidy/openwrt-actions/actions/workflows/amlogic.yml/badge.svg)](https://github.com/chencaidy/openwrt-actions/actions/workflows/amlogic.yml)
-
-## Downloads
-
-[![Download Link](https://img.shields.io/badge/Download-MEGA-blue)](https://mega.nz/folder/yFc3RY5Q#Qtbwdfx7PW0vNC-FuuLlnQ)
+| Platform | Devices | Release date | Build status | Link |
+|:---------|:--------|:-------------|:-------------|:-----|
+AMD64 | Generic | Every week 5 (UTC+0) | [![Build Status](https://github.com/chencaidy/openwrt-actions/actions/workflows/amd64.yml/badge.svg)](https://github.com/chencaidy/openwrt-actions/actions/workflows/amd64.yml) | [![Link](https://img.shields.io/badge/Download-MEGA-blue)](https://mega.nz/folder/yFc3RY5Q#Qtbwdfx7PW0vNC-FuuLlnQ/folder/LEliFBiK)
+Amlogic | AMedia X96 Air | Every week 5 (UTC+0) | [![Build Status](https://github.com/chencaidy/openwrt-actions/actions/workflows/amlogic.yml/badge.svg)](https://github.com/chencaidy/openwrt-actions/actions/workflows/amlogic.yml) | [![Link](https://img.shields.io/badge/Download-MEGA-blue)](https://mega.nz/folder/yFc3RY5Q#Qtbwdfx7PW0vNC-FuuLlnQ/folder/PJ8mjaiQ)
+Amlogic | Phicomm N1 | Every week 5 (UTC+0) | [![Build Status](https://github.com/chencaidy/openwrt-actions/actions/workflows/amlogic.yml/badge.svg)](https://github.com/chencaidy/openwrt-actions/actions/workflows/amlogic.yml) | [![Link](https://img.shields.io/badge/Download-MEGA-blue)](https://mega.nz/folder/yFc3RY5Q#Qtbwdfx7PW0vNC-FuuLlnQ/folder/LI0HhIKK)
 
 ## Description
 
