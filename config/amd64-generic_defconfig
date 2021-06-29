@@ -3,7 +3,6 @@ CONFIG_TARGET_x86_64=y
 CONFIG_TARGET_x86_64_DEVICE_generic=y
 # CONFIG_GRUB_IMAGES is not set
 CONFIG_PACKAGE_acpid=y
-CONFIG_PACKAGE_docker=y
 CONFIG_PACKAGE_iperf3=y
 CONFIG_PACKAGE_ipv6helper=y
 CONFIG_PACKAGE_kmod-usb-net-rndis=y
