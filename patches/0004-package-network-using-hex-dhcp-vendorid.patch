@@ -1,0 +1,13 @@
+diff --git a/package/network/config/netifd/files/lib/netifd/proto/dhcp.sh b/package/network/config/netifd/files/lib/netifd/proto/dhcp.sh
+index 3034b2ba6..f8528355f 100755
+--- a/package/network/config/netifd/files/lib/netifd/proto/dhcp.sh
++++ b/package/network/config/netifd/files/lib/netifd/proto/dhcp.sh
+@@ -69,7 +69,7 @@ proto_dhcp_setup() {
+ 		-f -t 0 -i "$iface" \
+ 		${ipaddr:+-r $ipaddr} \
+ 		${hostname:+-x "hostname:$hostname"} \
+-		${vendorid:+-V "$vendorid"} \
++		${vendorid:+-x "0x3c:$vendorid" -V \'\'} \
+ 		$clientid $defaultreqopts $broadcast $norelease $dhcpopts
+ }
+ 
