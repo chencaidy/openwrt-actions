@@ -61,5 +61,9 @@ PATCH_DIR=$ROOT_DIR/patches
 for name in $(find $PATCH_DIR -name "*.patch")
 do
 	patch -N -r- -p1 -d $OPENWRT_WS < $name
+	if [ $? -ne 0 ]; then
+		echo -e "\033[31;1m<== Patch failed \033[0m"
+		exit 1
+	fi
 done
 
