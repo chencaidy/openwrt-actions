@@ -13,8 +13,8 @@ function git_update
 	local branch=$3
 	local url=$4
 
+	echo -e "\033[1m>>> Pull $name \033[0m"
 	if [ -d "$path/$name/.git" ]; then
-		echo "Updating $path/$name"
 		cd $path/$name
 		git reset --hard
 		git clean -df
@@ -42,13 +42,11 @@ git_update $TARGET_DIR amlogic master https://github.com/chencaidy/openwrt-targe
 # Update thirdparty
 echo -e "\033[32;1m==> Update thirdparty \033[0m"
 mkdir -p $PACKAGE_DIR
-## From fw876
+rm -r $OPENWRT_WS/package/lean/luci-theme-argon
 git_update $PACKAGE_DIR helloworld master https://github.com/fw876/helloworld.git
-## From jerrykuku
 git_update $PACKAGE_DIR lua-maxminddb master https://github.com/jerrykuku/lua-maxminddb.git
 git_update $PACKAGE_DIR luci-app-vssr master https://github.com/jerrykuku/luci-app-vssr.git
 git_update $PACKAGE_DIR luci-theme-argon 18.06 https://github.com/jerrykuku/luci-theme-argon.git
-## From vernesong
 git_update $PACKAGE_DIR luci-app-openclash master https://github.com/vernesong/OpenClash.git
 
 # Update U-Boot
