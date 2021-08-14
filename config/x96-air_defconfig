@@ -1,6 +1,6 @@
 CONFIG_TARGET_amlogic=y
-CONFIG_TARGET_amlogic_cortexa55=y
-CONFIG_TARGET_amlogic_cortexa55_DEVICE_x96-air=y
+CONFIG_TARGET_amlogic_mesonsm1=y
+CONFIG_TARGET_amlogic_mesonsm1_DEVICE_x96-air=y
 CONFIG_BRCMFMAC_SDIO=y
 CONFIG_PACKAGE_ip6tables-mod-nat=y
 CONFIG_PACKAGE_kmod-mmc=y

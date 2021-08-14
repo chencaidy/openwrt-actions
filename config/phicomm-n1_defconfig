@@ -1,6 +1,6 @@
 CONFIG_TARGET_amlogic=y
-CONFIG_TARGET_amlogic_cortexa53=y
-CONFIG_TARGET_amlogic_cortexa53_DEVICE_phicomm-n1=y
+CONFIG_TARGET_amlogic_mesongx=y
+CONFIG_TARGET_amlogic_mesongx_DEVICE_phicomm-n1=y
 CONFIG_BRCMFMAC_SDIO=y
 CONFIG_PACKAGE_kcptun-client=y
 CONFIG_PACKAGE_kmod-mmc=y
