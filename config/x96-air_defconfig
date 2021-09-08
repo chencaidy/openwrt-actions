@@ -1,10 +1,10 @@
 CONFIG_TARGET_amlogic=y
-CONFIG_TARGET_amlogic_mesonsm1=y
-CONFIG_TARGET_amlogic_mesonsm1_DEVICE_x96-air=y
-CONFIG_BRCMFMAC_SDIO=y
+CONFIG_TARGET_amlogic_sm1=y
+CONFIG_TARGET_amlogic_sm1_DEVICE_amediatech_x96-air=y
 CONFIG_PACKAGE_ipv6helper=y
 CONFIG_PACKAGE_luci-app-adbyby-plus=y
 CONFIG_PACKAGE_luci-app-aria2=y
+CONFIG_PACKAGE_luci-app-cpufreq=y
 CONFIG_PACKAGE_luci-app-diskman=y
 CONFIG_PACKAGE_luci-app-docker=y
 CONFIG_PACKAGE_luci-app-frpc=y

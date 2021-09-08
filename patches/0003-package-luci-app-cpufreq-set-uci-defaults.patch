@@ -7,7 +7,7 @@ index 8443be579..ce2b04399 100755
  EOF
  
 +# Set default settings
-+uci set cpufreq.@settings[-1].governor=schedutil
++uci set cpufreq.@settings[-1].governor=$(cat /sys/devices/system/cpu/cpufreq/policy0/scaling_governor)
 +uci set cpufreq.@settings[-1].minifreq=$(cat /sys/devices/system/cpu/cpufreq/policy0/cpuinfo_min_freq)
 +uci set cpufreq.@settings[-1].maxfreq=$(cat /sys/devices/system/cpu/cpufreq/policy0/cpuinfo_max_freq)
 +uci commit cpufreq
