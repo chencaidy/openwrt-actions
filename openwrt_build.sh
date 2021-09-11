@@ -33,5 +33,8 @@ make defconfig
 
 # Build
 THREAD_NUM=$(cat /proc/cpuinfo | grep "processor"| wc -l)
-make -j $THREAD_NUM
-
+if [ $OPENWRT_DEBUG ]; then
+	make -j1 V=s
+else
+	make -j $THREAD_NUM
+fi
