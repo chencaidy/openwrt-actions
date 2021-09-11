@@ -1,6 +1,6 @@
 CONFIG_TARGET_amlogic=y
 CONFIG_TARGET_amlogic_sm1=y
-CONFIG_TARGET_amlogic_sm1_DEVICE_amediatech_x96-air=y
+CONFIG_TARGET_amlogic_sm1_DEVICE_amedia_x96air=y
 CONFIG_PACKAGE_ipv6helper=y
 CONFIG_PACKAGE_luci-app-adbyby-plus=y
 CONFIG_PACKAGE_luci-app-aria2=y

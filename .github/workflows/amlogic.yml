@@ -29,18 +29,18 @@ jobs:
         run: ./openwrt_update.sh
 
       - name: Build X96Air
-        run: ./openwrt_build.sh x96-air_defconfig
+        run: ./openwrt_build.sh amedia_x96air_defconfig
 
       - name: Deliver X96Air
         run: |
           echo -e "\033[32;1m==> Free space: \033[0m" && df -h
-          cd $GITHUB_WORKSPACE/openwrt/bin/targets/amlogic/mesonsm1
-          mkdir x96-air && cp *-x96-air-squashfs-* *.buildinfo sha256sums x96-air
+          cd $GITHUB_WORKSPACE/openwrt/bin/targets/amlogic/sm1
+          mkdir amedia_x96air && cp *-x96air-squashfs-* *.buildinfo sha256sums amedia_x96air
 
       - name: Upload X96Air
         uses: Difegue/action-megacmd@master
         with:
-          args: put $GITHUB_WORKSPACE/openwrt/bin/targets/amlogic/mesonsm1/x96-air /OpenWrt/Amlogic/x96-air/$(date +%Y%m%d)
+          args: put $GITHUB_WORKSPACE/openwrt/bin/targets/amlogic/sm1/amedia_x96air /OpenWrt/Amlogic/amedia_x96air/$(date +%Y%m%d)
         env:
           USERNAME: ${{ secrets.MEGA_USERNAME }}
           PASSWORD: ${{ secrets.MEGA_PASSWORD }}
