@@ -35,7 +35,8 @@ jobs:
         run: |
           echo -e "\033[32;1m==> Free space: \033[0m" && df -h
           cd $GITHUB_WORKSPACE/openwrt/bin/targets/x86/64
-          mkdir release && cp *-combined-efi.* *.buildinfo sha256sums release
+          mkdir release && cp *-combined-efi.* release
+          cd release && md5sum *.* > md5sums
 
       - name: Upload
         uses: Difegue/action-megacmd@master

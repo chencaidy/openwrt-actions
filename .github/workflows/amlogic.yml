@@ -35,7 +35,8 @@ jobs:
         run: |
           echo -e "\033[32;1m==> Free space: \033[0m" && df -h
           cd $GITHUB_WORKSPACE/openwrt/bin/targets/amlogic/sm1
-          mkdir amedia_x96air && cp *-x96air-squashfs-* *.buildinfo sha256sums amedia_x96air
+          mkdir amedia_x96air && cp *-amedia_x96air-* amedia_x96air
+          cd amedia_x96air && md5sum *.* > md5sums
 
       - name: Upload X96Air
         uses: Difegue/action-megacmd@master
