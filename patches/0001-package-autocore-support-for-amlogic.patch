@@ -1,5 +1,5 @@
 diff --git a/package/lean/autocore/Makefile b/package/lean/autocore/Makefile
-index 827c5f6ff..cd1779df2 100644
+index 8d55b88d4..9509750a2 100644
 --- a/package/lean/autocore/Makefile
 +++ b/package/lean/autocore/Makefile
 @@ -16,7 +16,7 @@ include $(INCLUDE_DIR)/package.mk
@@ -8,6 +8,6 @@ index 827c5f6ff..cd1779df2 100644
    MAINTAINER:=CN_SZTL
 -  DEPENDS:=@(TARGET_bcm27xx||TARGET_bcm53xx||TARGET_ipq40xx||TARGET_ipq806x||TARGET_ipq807x||TARGET_mvebu||TARGET_rockchip) \
 +  DEPENDS:=@(TARGET_bcm27xx||TARGET_bcm53xx||TARGET_ipq40xx||TARGET_ipq806x||TARGET_ipq807x||TARGET_mvebu||TARGET_rockchip||TARGET_amlogic) \
-     +TARGET_bcm27xx:bcm27xx-userland +TARGET_bcm53xx:nvram
+     +TARGET_bcm27xx:bcm27xx-userland +TARGET_bcm53xx:nvram +ethtool
    VARIANT:=arm
  endef
