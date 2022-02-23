@@ -1,7 +1,7 @@
-diff --git a/package/lean/luci-app-ipsec-vpnd/root/etc/uci-defaults/luci-ipsec b/package/lean/luci-app-ipsec-vpnd/root/etc/uci-defaults/luci-ipsec
+diff --git a/feeds/luci/applications/luci-app-ipsec-vpnd/root/etc/uci-defaults/luci-ipsec b/feeds/luci/applications/luci-app-ipsec-vpnd/root/etc/uci-defaults/luci-ipsec
 index fd7b33d36..d9b0a3ae2 100755
---- a/package/lean/luci-app-ipsec-vpnd/root/etc/uci-defaults/luci-ipsec
-+++ b/package/lean/luci-app-ipsec-vpnd/root/etc/uci-defaults/luci-ipsec
+--- a/feeds/luci/applications/luci-app-ipsec-vpnd/root/etc/uci-defaults/luci-ipsec
++++ b/feeds/luci/applications/luci-app-ipsec-vpnd/root/etc/uci-defaults/luci-ipsec
 @@ -10,12 +10,12 @@ uci -q batch <<-EOF >/dev/null
  EOF
  

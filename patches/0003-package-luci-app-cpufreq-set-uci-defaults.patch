@@ -1,7 +1,7 @@
-diff --git a/package/lean/luci-app-cpufreq/root/etc/uci-defaults/luci-cpufreq b/package/lean/luci-app-cpufreq/root/etc/uci-defaults/luci-cpufreq
+diff --git a/feeds/luci/applications/luci-app-cpufreq/root/etc/uci-defaults/luci-cpufreq b/feeds/luci/applications/luci-app-cpufreq/root/etc/uci-defaults/luci-cpufreq
 index 8443be579..ce2b04399 100755
---- a/package/lean/luci-app-cpufreq/root/etc/uci-defaults/luci-cpufreq
-+++ b/package/lean/luci-app-cpufreq/root/etc/uci-defaults/luci-cpufreq
+--- a/feeds/luci/applications/luci-app-cpufreq/root/etc/uci-defaults/luci-cpufreq
++++ b/feeds/luci/applications/luci-app-cpufreq/root/etc/uci-defaults/luci-cpufreq
 @@ -7,5 +7,11 @@ uci -q batch <<-EOF >/dev/null
  	commit ucitrack
  EOF
