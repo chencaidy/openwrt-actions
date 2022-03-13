@@ -31,9 +31,9 @@ git_update $ROOT_DIR openwrt master https://github.com/coolsnowwolf/lede.git
 
 # Update packages
 echo -e "\033[32;1m==> Update packages \033[0m"
-cd $OPENWRT_WS
-./scripts/feeds update -a
-./scripts/feeds install -a
+cd $OPENWRT_WS && ./scripts/feeds clean
+cd $OPENWRT_WS && ./scripts/feeds update -a
+cd $OPENWRT_WS && ./scripts/feeds install -a
 
 # Update target
 echo -e "\033[32;1m==> Update target \033[0m"
