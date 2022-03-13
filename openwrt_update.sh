@@ -42,7 +42,6 @@ git_update $TARGET_DIR amlogic master https://github.com/chencaidy/openwrt-targe
 # Update thirdparty
 echo -e "\033[32;1m==> Update thirdparty \033[0m"
 mkdir -p $PACKAGE_DIR
-rm -r $OPENWRT_WS/package/lean/luci-theme-argon
 git_update $PACKAGE_DIR helloworld master https://github.com/fw876/helloworld.git
 git_update $PACKAGE_DIR lua-maxminddb master https://github.com/jerrykuku/lua-maxminddb.git
 git_update $PACKAGE_DIR luci-app-vssr master https://github.com/jerrykuku/luci-app-vssr.git
