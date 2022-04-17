@@ -34,6 +34,7 @@ echo -e "\033[32;1m==> Update packages \033[0m"
 cd $OPENWRT_WS && ./scripts/feeds clean
 cd $OPENWRT_WS && ./scripts/feeds update -a
 cd $OPENWRT_WS && ./scripts/feeds install -a
+rm -rf $OPENWRT_WS/feeds/luci/themes/luci-theme-argon
 
 # Update target
 echo -e "\033[32;1m==> Update target \033[0m"
