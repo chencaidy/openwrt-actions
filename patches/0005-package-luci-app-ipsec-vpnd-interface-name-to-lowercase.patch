@@ -1,5 +1,5 @@
 diff --git a/feeds/luci/applications/luci-app-ipsec-vpnd/root/etc/uci-defaults/luci-ipsec b/feeds/luci/applications/luci-app-ipsec-vpnd/root/etc/uci-defaults/luci-ipsec
-index fd7b33d36..d9b0a3ae2 100755
+index 83b4c23..9214ace 100755
 --- a/feeds/luci/applications/luci-app-ipsec-vpnd/root/etc/uci-defaults/luci-ipsec
 +++ b/feeds/luci/applications/luci-app-ipsec-vpnd/root/etc/uci-defaults/luci-ipsec
 @@ -10,12 +10,12 @@ uci -q batch <<-EOF >/dev/null
@@ -21,11 +21,11 @@ index fd7b33d36..d9b0a3ae2 100755
  	
  	commit network
  		
-@@ -53,19 +53,18 @@ uci -q batch <<-EOF >/dev/null
-   set firewall.@rule[-1].src="wan"
-   set firewall.@rule[-1].proto="esp"
+@@ -53,19 +53,19 @@ uci -q batch <<-EOF >/dev/null
+ 	set firewall.@rule[-1].src="wan"
+ 	set firewall.@rule[-1].proto="esp"
    
--  delete firewall.VPN
+-	delete firewall.VPN
 -	set firewall.VPN=zone
 -	set firewall.VPN.name="VPN"
 -	set firewall.VPN.input="ACCEPT"
@@ -33,7 +33,7 @@ index fd7b33d36..d9b0a3ae2 100755
 -	set firewall.VPN.output="ACCEPT"
 -	set firewall.VPN.network="VPN"
 -	
-   delete firewall.vpn
+ 	delete firewall.vpn
 -	set firewall.vpn=forwarding
 +	set firewall.vpn=zone
  	set firewall.vpn.name="vpn"
@@ -43,11 +43,12 @@ index fd7b33d36..d9b0a3ae2 100755
 +	set firewall.vpn.forward="ACCEPT"
 +	set firewall.vpn.output="ACCEPT"
 +	set firewall.vpn.network="vpn"
-+	
-+  delete firewall.vpnf
++
++	delete firewall.vpnf
 +	set firewall.vpnf=forwarding
++	set firewall.vpnf.name="vpnf"
 +	set firewall.vpnf.dest="wan"
 +	set firewall.vpnf.src="vpn"
    
-   commit firewall
+ 	commit firewall
  EOF
