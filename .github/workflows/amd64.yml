@@ -9,7 +9,7 @@ on:
 jobs:
   build:
     name: Build firmware
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-20.04
 
     steps:
       - name: Checkout
@@ -20,6 +20,11 @@ jobs:
           sudo rm -rf /usr/local/lib/android
           sudo rm -rf /usr/share/dotnet
           sudo rm -rf /opt/ghc
+          sudo apt-get update
+          sudo apt-get -y purge azure-cli ghc* zulu* hhvm llvm* firefox google* dotnet* powershell openjdk* adoptopenjdk* mysql* php* mongodb* dotnet* moby* snapd*
+          sudo apt-get autopurge
+          sudo apt-get clean
+          docker rmi `docker images -q`
           echo -e "\033[32;1m==> Free space: \033[0m" && df -h
 
       - name: Environment
