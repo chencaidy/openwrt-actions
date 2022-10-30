@@ -19,12 +19,11 @@ jobs:
         run: |
           sudo rm -rf /usr/local/lib/android
           sudo rm -rf /usr/share/dotnet
+          sudo rm -rf /usr/share/swift
+          sudo rm -rf /usr/share/rust
+          sudo rm -rf /usr/lib/google-cloud-sdk
+          sudo rm -rf /usr/include/php
           sudo rm -rf /opt/ghc
-          sudo apt-get update
-          sudo apt-get -y purge azure-cli ghc* zulu* hhvm llvm* firefox google* dotnet* powershell openjdk* adoptopenjdk* mysql* php* mongodb* dotnet* moby* snapd*
-          sudo apt-get autopurge
-          sudo apt-get clean
-          docker rmi `docker images -q`
           echo -e "\033[32;1m==> Free space: \033[0m" && df -h
 
       - name: Environment
