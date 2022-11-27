@@ -24,6 +24,11 @@ jobs:
           sudo rm -rf /usr/lib/google-cloud-sdk
           sudo rm -rf /usr/include/php
           sudo rm -rf /opt/ghc
+          sudo rm -rf /opt/hostedtoolcache
+          sudo rm -rf /usr/share/swift
+          sudo rm -rf /usr/share/rust
+          sudo rm -rf /usr/local/share/vcpkg
+          sudo rm -rf /usr/lib/firefoxr
           echo -e "\033[32;1m==> Free space: \033[0m" && df -h
 
       - name: Environment
