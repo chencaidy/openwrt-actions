@@ -1,4 +1,5 @@
 #!/bin/bash
+set -e
 
 ROOT_DIR=$(dirname $(readlink -f "$0"))
 OPENWRT_WS=$ROOT_DIR/openwrt
@@ -10,8 +11,8 @@ function git_update
 {
 	local path=$1
 	local name=$2
-	local branch=$3
-	local url=$4
+	local repo=$3
+	local branch=$4
 
 	echo -e "\033[1m>>> Pull $name \033[0m"
 	if [ -d "$path/$name/.git" ]; then
@@ -21,13 +22,13 @@ function git_update
 		git pull
 	else
 		cd $path
-		git clone -b $branch $url $name
+		git clone -b $branch $repo $name
 	fi
 }
 
 # Update LEDE
 echo -e "\033[32;1m==> Update LEDE \033[0m"
-git_update $ROOT_DIR openwrt master https://github.com/coolsnowwolf/lede.git
+git_update $ROOT_DIR openwrt https://github.com/coolsnowwolf/lede.git master
 
 # Update packages
 echo -e "\033[32;1m==> Update packages \033[0m"
@@ -38,20 +39,16 @@ rm -rf $OPENWRT_WS/feeds/luci/themes/luci-theme-argon
 
 # Update target
 echo -e "\033[32;1m==> Update target \033[0m"
-git_update $TARGET_DIR amlogic master https://github.com/chencaidy/openwrt-target-amlogic.git
+git_update $TARGET_DIR amlogic https://github.com/chencaidy/openwrt-target-amlogic.git master
+
+# Update U-Boot
+echo -e "\033[32;1m==> Update U-Boot \033[0m"
+git_update $UBOOT_DIR uboot-amlogic https://github.com/chencaidy/openwrt-package-uboot-amlogic.git main
 
 # Update thirdparty
 echo -e "\033[32;1m==> Update thirdparty \033[0m"
 mkdir -p $PACKAGE_DIR
-git_update $PACKAGE_DIR helloworld master https://github.com/fw876/helloworld.git
-git_update $PACKAGE_DIR lua-maxminddb master https://github.com/jerrykuku/lua-maxminddb.git
-git_update $PACKAGE_DIR luci-app-vssr master https://github.com/jerrykuku/luci-app-vssr.git
-git_update $PACKAGE_DIR luci-theme-argon 18.06 https://github.com/jerrykuku/luci-theme-argon.git
-git_update $PACKAGE_DIR luci-app-openclash master https://github.com/vernesong/OpenClash.git
-
-# Update U-Boot
-echo -e "\033[32;1m==> Update U-Boot \033[0m"
-git_update $UBOOT_DIR uboot-amlogic main https://github.com/chencaidy/openwrt-package-uboot-amlogic.git
+git_update $PACKAGE_DIR luci-app-openclash https://github.com/vernesong/OpenClash.git master
 
 # Patcher
 echo -e "\033[32;1m==> Applying patch \033[0m"
