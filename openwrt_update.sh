@@ -22,7 +22,7 @@ function git_update
 		git pull
 	else
 		cd $path
-		git clone -b $branch $repo $name
+		git clone --depth 1 -b $branch $repo $name
 	fi
 }
 
