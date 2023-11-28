@@ -2,63 +2,51 @@
 set -e
 
 ROOT_DIR=$(dirname $(readlink -f "$0"))
-OPENWRT_WS=$ROOT_DIR/openwrt
-UBOOT_DIR=$OPENWRT_WS/package/boot
-PACKAGE_DIR=$OPENWRT_WS/package/openwrt-packages
-TARGET_DIR=$OPENWRT_WS/target/linux
+WORKSPACE_DIR=$ROOT_DIR/immortalwrt
+UBOOT_DIR=$WORKSPACE_DIR/package/boot
+PACKAGE_DIR=$WORKSPACE_DIR/package/openwrt-packages
+TARGET_DIR=$WORKSPACE_DIR/target/linux
 
-function git_update
-{
+function git_update {
 	local path=$1
-	local name=$2
-	local repo=$3
-	local branch=$4
+	local repo=$2
+	local branch=$3
 
-	echo -e "\033[1m>>> Pull $name \033[0m"
-	if [ -d "$path/$name/.git" ]; then
-		cd $path/$name
+	if [ -d "$path/.git" ]; then
+		cd $path
 		git reset --hard
 		git clean -df
 		git pull
 	else
-		cd $path
-		git clone --depth 1 -b $branch $repo $name
+		git clone --depth 1 -b $branch $repo $path
 	fi
 }
 
-# Update LEDE
-echo -e "\033[32;1m==> Update LEDE \033[0m"
-git_update $ROOT_DIR openwrt https://github.com/coolsnowwolf/lede.git master
+# Update ImmortalWrt
+echo -e "\033[32;1m==> Update ImmortalWrt \033[0m"
+git_update $WORKSPACE_DIR https://github.com/immortalwrt/immortalwrt.git openwrt-23.05
 
 # Update packages
 echo -e "\033[32;1m==> Update packages \033[0m"
-cd $OPENWRT_WS && ./scripts/feeds clean
-cd $OPENWRT_WS && ./scripts/feeds update -a
-cd $OPENWRT_WS && ./scripts/feeds install -a
-rm -rf $OPENWRT_WS/feeds/luci/themes/luci-theme-argon
+cd $WORKSPACE_DIR && ./scripts/feeds clean
+cd $WORKSPACE_DIR && ./scripts/feeds update -a
+cd $WORKSPACE_DIR && ./scripts/feeds install -a
 
 # Update target
 echo -e "\033[32;1m==> Update target \033[0m"
-git_update $TARGET_DIR amlogic https://github.com/chencaidy/openwrt-target-amlogic.git master
+# git_update $TARGET_DIR/amlogic https://github.com/chencaidy/openwrt-target-amlogic.git master
 
 # Update U-Boot
 echo -e "\033[32;1m==> Update U-Boot \033[0m"
-git_update $UBOOT_DIR uboot-amlogic https://github.com/chencaidy/openwrt-package-uboot-amlogic.git main
-
-# Update thirdparty
-echo -e "\033[32;1m==> Update thirdparty \033[0m"
-mkdir -p $PACKAGE_DIR
-git_update $PACKAGE_DIR luci-app-openclash https://github.com/vernesong/OpenClash.git master
+# git_update $UBOOT_DIR/uboot-amlogic https://github.com/chencaidy/openwrt-package-uboot-amlogic.git main
 
 # Patcher
 echo -e "\033[32;1m==> Applying patch \033[0m"
 PATCH_DIR=$ROOT_DIR/patches
-for name in $(find $PATCH_DIR -name "*.patch")
-do
-	patch -N -r- -p1 -d $OPENWRT_WS < $name
+for name in $(find $PATCH_DIR -name "*.patch"); do
+	patch -N -r- -p1 -d $WORKSPACE_DIR <$name
 	if [ $? -ne 0 ]; then
 		echo -e "\033[31;1m<== Patch failed \033[0m"
 		exit 1
 	fi
 done
-

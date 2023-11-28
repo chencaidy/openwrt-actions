@@ -1,5 +1,3 @@
-diff --git a/package/network/config/netifd/files/lib/netifd/proto/dhcp.sh b/package/network/config/netifd/files/lib/netifd/proto/dhcp.sh
-index 3034b2ba6..f8528355f 100755
 --- a/package/network/config/netifd/files/lib/netifd/proto/dhcp.sh
 +++ b/package/network/config/netifd/files/lib/netifd/proto/dhcp.sh
 @@ -69,7 +69,7 @@ proto_dhcp_setup() {
