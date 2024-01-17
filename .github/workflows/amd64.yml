@@ -50,7 +50,7 @@ jobs:
       - name: Upload
         uses: Difegue/action-megacmd@master
         with:
-          args: put $GITHUB_WORKSPACE/openwrt/bin/targets/x86/64/release /OpenWrt/AMD64/$(date +%Y%m%d)
+          args: put -c $GITHUB_WORKSPACE/openwrt/bin/targets/x86/64/release /OpenWrt/AMD64/$(date +%Y%m%d)
         env:
           USERNAME: ${{ secrets.MEGA_USERNAME }}
           PASSWORD: ${{ secrets.MEGA_PASSWORD }}

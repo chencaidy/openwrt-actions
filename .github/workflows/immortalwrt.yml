@@ -45,7 +45,7 @@ jobs:
       - name: Upload
         uses: Difegue/action-megacmd@master
         with:
-          args: put $GITHUB_WORKSPACE/immortalwrt/bin/targets /ImmortalWrt/$(date +%Y%m%d)
+          args: put -c $GITHUB_WORKSPACE/immortalwrt/bin/targets /ImmortalWrt/$(date +%Y%m%d)
         env:
           USERNAME: ${{ secrets.MEGA_USERNAME }}
           PASSWORD: ${{ secrets.MEGA_PASSWORD }}

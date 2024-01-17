@@ -50,7 +50,7 @@ jobs:
       - name: Upload X96Air
         uses: Difegue/action-megacmd@master
         with:
-          args: put $GITHUB_WORKSPACE/openwrt/bin/targets/amlogic/sm1/amedia_x96air /OpenWrt/Amlogic/amedia_x96air/$(date +%Y%m%d)
+          args: put -c $GITHUB_WORKSPACE/openwrt/bin/targets/amlogic/sm1/amedia_x96air /OpenWrt/Amlogic/amedia_x96air/$(date +%Y%m%d)
         env:
           USERNAME: ${{ secrets.MEGA_USERNAME }}
           PASSWORD: ${{ secrets.MEGA_PASSWORD }}
