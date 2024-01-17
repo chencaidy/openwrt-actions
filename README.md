@@ -4,7 +4,7 @@
 
 | Platform | Devices | Release date | Build status | Link |
 |:---------|:--------|:-------------|:-------------|:-----|
-x86-64 | generic | Every week 5 (UTC+0) | [![Build Status](https://github.com/chencaidy/openwrt-actions/actions/workflows/amd64.yml/badge.svg)](https://github.com/chencaidy/openwrt-actions/actions/workflows/amd64.yml) | [![Link](https://img.shields.io/badge/Download-MEGA-blue)](https://mega.nz/folder/yFc3RY5Q#Qtbwdfx7PW0vNC-FuuLlnQ/folder/LEliFBiK)
+x86-64 | generic | Every week 5 (UTC+0) | [![Build Status](https://github.com/chencaidy/openwrt-actions/actions/workflows/immortalwrt.yml/badge.svg)](https://github.com/chencaidy/openwrt-actions/actions/workflows/immortalwrt.yml) | [![Link](https://img.shields.io/badge/Download-MEGA-blue)](https://mega.nz/folder/TAk0kQwS#OknEEraFkFflT9anmt15lg)
 
 ## Description
 
