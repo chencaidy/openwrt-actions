@@ -48,7 +48,7 @@ jobs:
           cd amedia_x96air && md5sum *.* > md5sums
 
       - name: Upload X96Air
-        uses: Difegue/action-megacmd@master
+        uses: chencaidy/action-megacmd@master
         with:
           args: put -c $GITHUB_WORKSPACE/openwrt/bin/targets/amlogic/sm1/amedia_x96air /OpenWrt/Amlogic/amedia_x96air/$(date +%Y%m%d)
         env:

@@ -9,7 +9,7 @@ on:
 jobs:
   build:
     name: Build firmware
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
 
     steps:
       - name: Checkout
@@ -43,7 +43,7 @@ jobs:
         run: ./openwrt_build.sh x86-64-generic_defconfig
 
       - name: Upload
-        uses: Difegue/action-megacmd@master
+        uses: chencaidy/action-megacmd@master
         with:
           args: put -c $GITHUB_WORKSPACE/immortalwrt/bin/targets /ImmortalWrt/$(date +%Y%m%d)
         env:
