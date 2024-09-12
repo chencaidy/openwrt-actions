@@ -24,7 +24,7 @@ function git_update {
 
 # Update ImmortalWrt
 echo -e "\033[32;1m==> Update ImmortalWrt \033[0m"
-git_update $WORKSPACE_DIR https://github.com/immortalwrt/immortalwrt.git openwrt-23.05
+git_update $WORKSPACE_DIR https://github.com/immortalwrt/immortalwrt.git master
 
 # Update packages
 echo -e "\033[32;1m==> Update packages \033[0m"
@@ -32,13 +32,17 @@ cd $WORKSPACE_DIR && ./scripts/feeds clean
 cd $WORKSPACE_DIR && ./scripts/feeds update -a
 cd $WORKSPACE_DIR && ./scripts/feeds install -a
 
-# Update target
-echo -e "\033[32;1m==> Update target \033[0m"
+# Update custom target
+# echo -e "\033[32;1m==> Update custom target \033[0m"
 # git_update $TARGET_DIR/amlogic https://github.com/chencaidy/openwrt-target-amlogic.git master
 
-# Update U-Boot
-echo -e "\033[32;1m==> Update U-Boot \033[0m"
+# Update custom U-Boot
+# echo -e "\033[32;1m==> Update custom U-Boot \033[0m"
 # git_update $UBOOT_DIR/uboot-amlogic https://github.com/chencaidy/openwrt-package-uboot-amlogic.git main
+
+# Update custom packages
+echo -e "\033[32;1m==> Update custom packages \033[0m"
+git_update $PACKAGE_DIR/mosdns https://github.com/sbwml/luci-app-mosdns.git v5
 
 # Patcher
 echo -e "\033[32;1m==> Applying patch \033[0m"
