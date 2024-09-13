@@ -16,7 +16,7 @@ function git_update {
 		cd $path
 		git reset --hard
 		git clean -df
-		git pull
+		git pull --depth 1
 	else
 		git clone --depth 1 -b $branch $repo $path
 	fi
