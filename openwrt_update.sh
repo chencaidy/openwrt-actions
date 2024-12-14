@@ -42,6 +42,7 @@ cd $WORKSPACE_DIR && ./scripts/feeds install -a
 
 # Update custom packages
 echo -e "\033[32;1m==> Update custom packages \033[0m"
+cd $WORKSPACE_DIR && rm -rf feeds/packages/net/mosdns
 git_update $PACKAGE_DIR/mosdns https://github.com/sbwml/luci-app-mosdns.git v5
 
 # Patcher
