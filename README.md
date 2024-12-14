@@ -16,7 +16,7 @@ x86-64 | generic | Every week 5 (UTC+0) | [![Build Status](https://github.com/ch
 
 ## Manually build
 
-1. Cleanly install Ubuntu 20.04
+1. Cleanly install Ubuntu 24.04
 2. Clone actions repo and enter workspace
 3. Setup environment: `./openwrt_env.sh`
 4. Update source code: `./openwrt_update.sh`
