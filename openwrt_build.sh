@@ -1,12 +1,13 @@
 #!/bin/bash
+set -e
 
-ROOT_FOLDER=$(dirname $(readlink -f "$0"))
-CONFIG_FOLDER=$ROOT_FOLDER/config
-OPENWRT_WS=$ROOT_FOLDER/openwrt
+ROOT_DIR=$(dirname $(readlink -f "$0"))
+WORKSPACE_DIR=$ROOT_DIR/immortalwrt
+CONFIG_DIR=$ROOT_DIR/config
 
 # Get device config
 if [ -z $1 ]; then
-	for name in $(ls $ROOT_FOLDER/config)
+	for name in $(ls $CONFIG_DIR)
 	do
 		LISTS=$LISTS"$name null "
 	done
@@ -20,7 +21,7 @@ else
 fi
 
 # Switch to workspace
-cd $OPENWRT_WS
+cd $WORKSPACE_DIR
 
 # Remove old configure
 rm -f .config
@@ -28,7 +29,7 @@ rm -f .config.old
 
 # Import device defconfig
 echo -e "\033[32;1m==> Build target: $TARGET \033[0m"
-cat $CONFIG_FOLDER/$TARGET >> .config
+cat $CONFIG_DIR/$TARGET >> .config
 make defconfig
 
 # Build

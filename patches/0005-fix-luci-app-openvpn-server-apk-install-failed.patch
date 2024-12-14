@@ -1,0 +1,282 @@
+diff --git a/feeds/luci/applications/luci-app-openvpn-server/luasrc/model/cbi/openvpn-server/openvpn-server.lua b/feeds/luci/applications/luci-app-openvpn-server/luasrc/model/cbi/openvpn-server/openvpn-server.lua
+index 87dbb03..5d6c7b9 100644
+--- a/feeds/luci/applications/luci-app-openvpn-server/luasrc/model/cbi/openvpn-server/openvpn-server.lua
++++ b/feeds/luci/applications/luci-app-openvpn-server/luasrc/model/cbi/openvpn-server/openvpn-server.lua
+@@ -5,7 +5,7 @@ mp = Map("openvpn", translate("OpenVPN Server"), translate("An easy config OpenV
+ 
+ mp:section(SimpleSection).template = "openvpn/openvpn_status"
+ 
+-s = mp:section(TypedSection, "openvpn")
++s = mp:section(NamedSection, "myvpn", "openvpn")
+ s.anonymous = true
+ s.addremove = false
+ 
+@@ -31,6 +31,13 @@ localnet = s:taboption("basic", Value, "server", translate("Client Network"))
+ localnet.datatype = "string"
+ localnet.description = translate("VPN Client Network IP with subnet")
+ 
++compress = s:taboption("basic", Value, "compress", translate("Compress Method"))
++compress:value("no", translate("Disabled"))
++compress:value("lzo", translate("lzo"))
++compress:value("lz4", translate("lz4"))
++compress:value("lz4-v2", translate("lz4-v2"))
++compress.description = translate("Add new client setting like compress lzo when you set the compress method")
++
+ list = s:taboption("basic", DynamicList, "push")
+ list.title = translate("Client Settings")
+ list.datatype = "string"
+diff --git a/feeds/luci/applications/luci-app-openvpn-server/po/zh_Hans/openvpn-server.po b/feeds/luci/applications/luci-app-openvpn-server/po/zh_Hans/openvpn-server.po
+index 27d1ccd..6ecec11 100644
+--- a/feeds/luci/applications/luci-app-openvpn-server/po/zh_Hans/openvpn-server.po
++++ b/feeds/luci/applications/luci-app-openvpn-server/po/zh_Hans/openvpn-server.po
+@@ -63,6 +63,15 @@ msgstr "客户端网段"
+ msgid "VPN Client Network IP with subnet"
+ msgstr "客户端分配的网段地址（默认为 10.8.0.0 255.255.255.0）"
+ 
++
++#: applications/luci-app-openvpn-server/luasrc/model/cbi/openvpn-server/openvpn-server.lua:34
++msgid "Compress Method"
++msgstr "压缩方式"
++
++#: applications/luci-app-openvpn-server/luasrc/model/cbi/openvpn-server/openvpn-server.lua:39
++msgid "Add new client setting like compress lzo when you set the compress method"
++msgstr "设置压缩方式后需要在客户端推送配置种增加相应参数（例：compress lzo）"
++
+ #: applications/luci-app-openvpn-server/luasrc/model/cbi/openvpn-server/openvpn-server.lua:35
+ msgid "Client Settings"
+ msgstr "客户端推送配置"
+diff --git a/feeds/luci/applications/luci-app-openvpn-server/root/etc/config/openvpn b/feeds/luci/applications/luci-app-openvpn-server/root/etc/config/openvpn
+deleted file mode 100644
+index 5c85420..0000000
+--- a/feeds/luci/applications/luci-app-openvpn-server/root/etc/config/openvpn
++++ /dev/null
+@@ -1,27 +0,0 @@
+-
+-config openvpn 'myvpn'
+-	option enabled '0'
+-	option proto 'tcp-server'
+-	option port '1194'
+-	option ddns example.com
+-	option dev 'tun'
+-	option topology 'subnet'
+-	option server '10.8.0.0 255.255.255.0'
+-	option comp_lzo 'adaptive'
+-	option ca '/etc/openvpn/pki/ca.crt'
+-	option dh '/etc/openvpn/pki/dh.pem'
+-	option cert '/etc/openvpn/pki/server.crt'
+-	option key '/etc/openvpn/pki/server.key'
+-	option persist_key '1'
+-	option persist_tun '1'
+-	option user 'nobody'
+-	option group 'nogroup'
+-	option max_clients '10'
+-	option keepalive '10 120'
+-	option verb '3'
+-	option status '/var/log/openvpn_status.log'
+-	option log '/tmp/openvpn.log'
+-	list push 'route 192.168.1.0 255.255.255.0'
+-	list push 'comp-lzo adaptive'
+-	list push 'redirect-gateway def1 bypass-dhcp'
+-	list push 'dhcp-option DNS 192.168.1.1'
+diff --git a/feeds/luci/applications/luci-app-openvpn-server/root/etc/easy-rsa/vars b/feeds/luci/applications/luci-app-openvpn-server/root/etc/easy-rsa/vars
+deleted file mode 100644
+index 0b91d34..0000000
+--- a/feeds/luci/applications/luci-app-openvpn-server/root/etc/easy-rsa/vars
++++ /dev/null
+@@ -1,22 +0,0 @@
+-# A little housekeeping: DO NOT EDIT THIS SECTION
+-#
+-# Easy-RSA 3.x does not source into the environment directly.
+-# Complain if a user tries to do this:
+-if [ -z "$EASYRSA_CALLER" ]; then
+-	echo "You appear to be sourcing an Easy-RSA *vars* file. This is" >&2
+-	echo "no longer necessary and is disallowed. See the section called" >&2
+-	echo "*How to use this file* near the top comments for more details." >&2
+-	return 1
+-fi
+-
+-set_var EASYRSA_KEY_SIZE		2048
+-set_var EASYRSA_ALGO			rsa
+-set_var EASYRSA_CA_EXPIRE		3650
+-set_var EASYRSA_CERT_EXPIRE		3650
+-set_var EASYRSA_DN				"org"
+-set_var EASYRSA_REQ_COUNTRY		"US"
+-set_var EASYRSA_REQ_PROVINCE	"California"
+-set_var EASYRSA_REQ_CITY		"San Francisco"
+-set_var EASYRSA_REQ_ORG			"OpenVPN"
+-set_var EASYRSA_REQ_EMAIL		"openvpn@openvpn.net"
+-set_var EASYRSA_REQ_OU			"OpenVPN"
+diff --git a/feeds/luci/applications/luci-app-openvpn-server/root/etc/openvpn-addon.conf b/feeds/luci/applications/luci-app-openvpn-server/root/etc/openvpn-addon.conf
+index 647de3e..e69de29 100644
+--- a/feeds/luci/applications/luci-app-openvpn-server/root/etc/openvpn-addon.conf
++++ b/feeds/luci/applications/luci-app-openvpn-server/root/etc/openvpn-addon.conf
+@@ -1 +0,0 @@
+-comp-lzo
+diff --git a/feeds/luci/applications/luci-app-openvpn-server/root/etc/openvpn/genovpn.sh b/feeds/luci/applications/luci-app-openvpn-server/root/etc/openvpn/genovpn.sh
+index c415cbd..7d7f359 100755
+--- a/feeds/luci/applications/luci-app-openvpn-server/root/etc/openvpn/genovpn.sh
++++ b/feeds/luci/applications/luci-app-openvpn-server/root/etc/openvpn/genovpn.sh
+@@ -2,7 +2,7 @@
+ 
+ ddns=`uci get openvpn.myvpn.ddns`
+ port=`uci get openvpn.myvpn.port`
+-proto=`uci get openvpn.myvpn.proto|sed -e 's/server/client/g'`
++proto=`uci get openvpn.myvpn.proto`
+ 
+ cat > /tmp/my.ovpn  <<EOF
+ client
+@@ -15,13 +15,17 @@ persist-key
+ persist-tun
+ verb 3
+ EOF
++
++[ -f /etc/openvpn-addon.conf ] && cat /etc/openvpn-addon.conf >> /tmp/my.ovpn
++
+ echo '<ca>' >> /tmp/my.ovpn
+ cat /etc/openvpn/pki/ca.crt >> /tmp/my.ovpn
+ echo '</ca>' >> /tmp/my.ovpn
++
+ echo '<cert>' >> /tmp/my.ovpn
+-cat /etc/openvpn/pki/client1.crt >> /tmp/my.ovpn
++cat /etc/openvpn/pki/issued/client1.crt >> /tmp/my.ovpn
+ echo '</cert>' >> /tmp/my.ovpn
++
+ echo '<key>' >> /tmp/my.ovpn
+-cat /etc/openvpn/pki/client1.key >> /tmp/my.ovpn
++cat /etc/openvpn/pki/private/client1.key >> /tmp/my.ovpn
+ echo '</key>' >> /tmp/my.ovpn
+-[ -f /etc/openvpn-addon.conf ] && cat /etc/openvpn-addon.conf >> /tmp/my.ovpn
+diff --git a/feeds/luci/applications/luci-app-openvpn-server/root/etc/openvpn/renewcert.sh b/feeds/luci/applications/luci-app-openvpn-server/root/etc/openvpn/renewcert.sh
+index 7dc0f2b..9218dac 100755
+--- a/feeds/luci/applications/luci-app-openvpn-server/root/etc/openvpn/renewcert.sh
++++ b/feeds/luci/applications/luci-app-openvpn-server/root/etc/openvpn/renewcert.sh
+@@ -1,7 +1,6 @@
+ #!/bin/sh
+ 
+-export EASYRSA_PKI="/etc/easy-rsa/pki"
+-export EASYRSA_VARS_FILE="/etc/easy-rsa/vars"
++export EASYRSA_VARS_FILE="/etc/openvpn/vars"
+ export EASYRSA_CLI="easyrsa --batch"
+ 
+ # Cleanup
+@@ -11,22 +10,13 @@ echo -en "yes\nyes\n" | $EASYRSA_CLI init-pki
+ $EASYRSA_CLI gen-dh
+ 
+ # Generate for the CA
+-$EASYRSA_CLI build-ca nopass
++$EASYRSA_CLI build-ca
+ 
+ # Generate for the server
+-$EASYRSA_CLI build-server-full server nopass
++$EASYRSA_CLI build-server-full server
+ 
+ # Generate for the client
+-$EASYRSA_CLI build-client-full client1 nopass
+-
+-# Copy files
+-mkdir -p /etc/openvpn/pki
+-cp /etc/easy-rsa/pki/ca.crt /etc/openvpn/pki/
+-cp /etc/easy-rsa/pki/dh.pem /etc/openvpn/pki/
+-cp /etc/easy-rsa/pki/issued/server.crt /etc/openvpn/pki/
+-cp /etc/easy-rsa/pki/private/server.key /etc/openvpn/pki/
+-cp /etc/easy-rsa/pki/issued/client1.crt /etc/openvpn/pki/
+-cp /etc/easy-rsa/pki/private/client1.key /etc/openvpn/pki/
++$EASYRSA_CLI build-client-full client1
+ 
+ # Restart openvpn
+ /etc/init.d/openvpn restart
+diff --git a/feeds/luci/applications/luci-app-openvpn-server/root/etc/openvpn/vars b/feeds/luci/applications/luci-app-openvpn-server/root/etc/openvpn/vars
+new file mode 100644
+index 0000000..7b0fa2c
+--- /dev/null
++++ b/feeds/luci/applications/luci-app-openvpn-server/root/etc/openvpn/vars
+@@ -0,0 +1,28 @@
++# Easy-RSA 3 parameter settings
++
++# A little housekeeping: DO NOT EDIT THIS SECTION
++#
++# Easy-RSA 3.x does not source into the environment directly.
++# Complain if a user tries to do this:
++if [ -z "$EASYRSA_CALLER" ]; then
++	echo "You appear to be sourcing an Easy-RSA *vars* file. This is" >&2
++	echo "no longer necessary and is disallowed. See the section called" >&2
++	echo "*How to use this file* near the top comments for more details." >&2
++	return 1
++fi
++
++# DO YOUR EDITS BELOW THIS POINT
++
++set_var EASYRSA_PKI		"/etc/openvpn/pki"
++set_var EASYRSA_DN		"org"
++set_var EASYRSA_REQ_COUNTRY	"US"
++set_var EASYRSA_REQ_PROVINCE	"California"
++set_var EASYRSA_REQ_CITY	"Pleasanton"
++set_var EASYRSA_REQ_ORG		"OpenVPN"
++set_var EASYRSA_REQ_EMAIL	"openvpn@openvpn.net"
++set_var EASYRSA_REQ_OU		"OpenVPN"
++set_var EASYRSA_NO_PASS		1
++set_var EASYRSA_KEY_SIZE	2048
++set_var EASYRSA_ALGO		rsa
++set_var EASYRSA_CA_EXPIRE	3650
++set_var EASYRSA_CERT_EXPIRE	3650
+diff --git a/feeds/luci/applications/luci-app-openvpn-server/root/etc/uci-defaults/openvpn b/feeds/luci/applications/luci-app-openvpn-server/root/etc/uci-defaults/openvpn
+index 8504942..3d4ad4f 100644
+--- a/feeds/luci/applications/luci-app-openvpn-server/root/etc/uci-defaults/openvpn
++++ b/feeds/luci/applications/luci-app-openvpn-server/root/etc/uci-defaults/openvpn
+@@ -1,7 +1,35 @@
+ #!/bin/sh
+ 
+-openvpn_port="$(uci -q get openvpn.myvpn.port)"
+-[ -z "$openvpn_port" ] && openvpn_port=1194
++uci -q batch <<-EOF >/dev/null
++	delete openvpn.myvpn
++	set openvpn.myvpn=openvpn
++	set openvpn.myvpn.enabled='0'
++	set openvpn.myvpn.proto='tcp6'
++	set openvpn.myvpn.port='1194'
++	set openvpn.myvpn.ddns='example.com'
++	set openvpn.myvpn.dev='tun'
++	set openvpn.myvpn.topology='subnet'
++	set openvpn.myvpn.server='10.8.0.0 255.255.255.0'
++	set openvpn.myvpn.ca='/etc/openvpn/pki/ca.crt'
++	set openvpn.myvpn.dh='/etc/openvpn/pki/dh.pem'
++	set openvpn.myvpn.cert='/etc/openvpn/pki/issued/server.crt'
++	set openvpn.myvpn.key='/etc/openvpn/pki/private/server.key'
++	set openvpn.myvpn.persist_key='1'
++	set openvpn.myvpn.persist_tun='1'
++	set openvpn.myvpn.user='nobody'
++	set openvpn.myvpn.group='nogroup'
++	set openvpn.myvpn.max_clients='10'
++	set openvpn.myvpn.keepalive='10 120'
++	set openvpn.myvpn.verb='3'
++	set openvpn.myvpn.status='/var/log/openvpn_status.log'
++	set openvpn.myvpn.log='/tmp/openvpn.log'
++	set openvpn.myvpn.compress='no'
++	add_list openvpn.myvpn.push='route 192.168.1.0 255.255.255.0'
++	add_list openvpn.myvpn.push='redirect-gateway def1 bypass-dhcp'
++	add_list openvpn.myvpn.push='dhcp-option DNS 192.168.1.1'
++
++	commit openvpn
++EOF
+ 
+ uci -q batch <<-EOF >/dev/null
+ 	delete network.vpn0
+@@ -10,14 +38,16 @@ uci -q batch <<-EOF >/dev/null
+ 	set network.vpn0.proto='none'
+ 
+ 	commit network
++EOF
+ 
++uci -q batch <<-EOF >/dev/null
+ 	delete firewall.openvpn
+ 	set firewall.openvpn=rule
+-	set firewall.openvpn.name='openvpn'
++	set firewall.openvpn.name='Allow-OpenVPN'
+ 	set firewall.openvpn.target='ACCEPT'
+ 	set firewall.openvpn.src='wan'
+ 	set firewall.openvpn.proto='tcp udp'
+-	set firewall.openvpn.dest_port="$openvpn_port"
++	set firewall.openvpn.dest_port='1194'
+ 
+ 	delete firewall.vpn
+ 	set firewall.vpn=zone
