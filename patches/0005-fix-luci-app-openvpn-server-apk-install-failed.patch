@@ -1,5 +1,5 @@
 diff --git a/feeds/luci/applications/luci-app-openvpn-server/luasrc/model/cbi/openvpn-server/openvpn-server.lua b/feeds/luci/applications/luci-app-openvpn-server/luasrc/model/cbi/openvpn-server/openvpn-server.lua
-index 87dbb03..5d6c7b9 100644
+index 87dbb03..0342370 100644
 --- a/feeds/luci/applications/luci-app-openvpn-server/luasrc/model/cbi/openvpn-server/openvpn-server.lua
 +++ b/feeds/luci/applications/luci-app-openvpn-server/luasrc/model/cbi/openvpn-server/openvpn-server.lua
 @@ -5,7 +5,7 @@ mp = Map("openvpn", translate("OpenVPN Server"), translate("An easy config OpenV
@@ -11,12 +11,11 @@ index 87dbb03..5d6c7b9 100644
  s.anonymous = true
  s.addremove = false
  
-@@ -31,6 +31,13 @@ localnet = s:taboption("basic", Value, "server", translate("Client Network"))
+@@ -31,6 +31,12 @@ localnet = s:taboption("basic", Value, "server", translate("Client Network"))
  localnet.datatype = "string"
  localnet.description = translate("VPN Client Network IP with subnet")
  
 +compress = s:taboption("basic", Value, "compress", translate("Compress Method"))
-+compress:value("no", translate("Disabled"))
 +compress:value("lzo", translate("lzo"))
 +compress:value("lz4", translate("lz4"))
 +compress:value("lz4-v2", translate("lz4-v2"))
@@ -220,10 +219,10 @@ index 0000000..7b0fa2c
 +set_var EASYRSA_CA_EXPIRE	3650
 +set_var EASYRSA_CERT_EXPIRE	3650
 diff --git a/feeds/luci/applications/luci-app-openvpn-server/root/etc/uci-defaults/openvpn b/feeds/luci/applications/luci-app-openvpn-server/root/etc/uci-defaults/openvpn
-index 8504942..3d4ad4f 100644
+index 8504942..3d0c6e0 100644
 --- a/feeds/luci/applications/luci-app-openvpn-server/root/etc/uci-defaults/openvpn
 +++ b/feeds/luci/applications/luci-app-openvpn-server/root/etc/uci-defaults/openvpn
-@@ -1,7 +1,35 @@
+@@ -1,7 +1,36 @@
  #!/bin/sh
  
 -openvpn_port="$(uci -q get openvpn.myvpn.port)"
@@ -251,17 +250,18 @@ index 8504942..3d4ad4f 100644
 +	set openvpn.myvpn.verb='3'
 +	set openvpn.myvpn.status='/var/log/openvpn_status.log'
 +	set openvpn.myvpn.log='/tmp/openvpn.log'
-+	set openvpn.myvpn.compress='no'
++	set openvpn.myvpn.compress='lz4-v2'
 +	add_list openvpn.myvpn.push='route 192.168.1.0 255.255.255.0'
 +	add_list openvpn.myvpn.push='redirect-gateway def1 bypass-dhcp'
 +	add_list openvpn.myvpn.push='dhcp-option DNS 192.168.1.1'
++	add_list openvpn.myvpn.push='compress lz4-v2'
 +
 +	commit openvpn
 +EOF
  
  uci -q batch <<-EOF >/dev/null
  	delete network.vpn0
-@@ -10,14 +38,16 @@ uci -q batch <<-EOF >/dev/null
+@@ -10,14 +39,16 @@ uci -q batch <<-EOF >/dev/null
  	set network.vpn0.proto='none'
  
  	commit network
