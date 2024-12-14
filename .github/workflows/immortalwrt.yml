@@ -15,7 +15,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
         with:
-          ref: immortalwrt
+          ref: main
 
       - name: Cleanup
         run: |
