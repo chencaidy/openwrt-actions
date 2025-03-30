@@ -77,10 +77,10 @@ index 5c85420..0000000
 -	list push 'comp-lzo adaptive'
 -	list push 'redirect-gateway def1 bypass-dhcp'
 -	list push 'dhcp-option DNS 192.168.1.1'
-diff --git a/feeds/luci/applications/luci-app-openvpn-server/root/etc/easy-rsa/vars b/feeds/luci/applications/luci-app-openvpn-server/root/etc/easy-rsa/vars
+diff --git a/feeds/luci/applications/luci-app-openvpn-server/root/etc/easy-rsa/vars-server b/feeds/luci/applications/luci-app-openvpn-server/root/etc/easy-rsa/vars-server
 deleted file mode 100644
 index 0b91d34..0000000
---- a/feeds/luci/applications/luci-app-openvpn-server/root/etc/easy-rsa/vars
+--- a/feeds/luci/applications/luci-app-openvpn-server/root/etc/easy-rsa/vars-server
 +++ /dev/null
 @@ -1,22 +0,0 @@
 -# A little housekeeping: DO NOT EDIT THIS SECTION
@@ -153,7 +153,7 @@ index 7dc0f2b..9218dac 100755
  #!/bin/sh
  
 -export EASYRSA_PKI="/etc/easy-rsa/pki"
--export EASYRSA_VARS_FILE="/etc/easy-rsa/vars"
+-export EASYRSA_VARS_FILE="/etc/easy-rsa/vars-server"
 +export EASYRSA_VARS_FILE="/etc/openvpn/vars"
  export EASYRSA_CLI="easyrsa --batch"
  
